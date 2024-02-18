@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +34,9 @@ public class User {
 
     @Column(nullable=false)
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles;
 
     public User(String username, String email, String password) {
         this.username = username;

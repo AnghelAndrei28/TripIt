@@ -1,5 +1,7 @@
 package com.example.tripit;
 
+import com.example.tripit.persistance.Role;
+import com.example.tripit.persistance.RoleRepository;
 import com.example.tripit.persistance.User;
 import com.example.tripit.persistance.UserRepository;
 import org.springframework.boot.CommandLineRunner;
