@@ -1,4 +1,4 @@
-package com.example.tripit.persistance;
+package com.example.tripit.core.persistance;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

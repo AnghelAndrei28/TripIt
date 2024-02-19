@@ -1,4 +1,4 @@
-package com.example.tripit.dtos;
+package com.example.tripit.auth.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class RegisterDto {
     @NotEmpty
     private String username;
     @NotEmpty(message = "Email should not be empty")

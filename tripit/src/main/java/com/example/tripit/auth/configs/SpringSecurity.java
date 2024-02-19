@@ -1,4 +1,4 @@
-package com.example.tripit.configs;
+package com.example.tripit.auth.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

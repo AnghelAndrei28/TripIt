@@ -1,8 +1,8 @@
-package com.example.tripit.services;
+package com.example.tripit.auth.services;
 
-import com.example.tripit.persistance.Role;
-import com.example.tripit.persistance.User;
-import com.example.tripit.persistance.UserRepository;
+import com.example.tripit.core.persistance.Role;
+import com.example.tripit.core.persistance.User;
+import com.example.tripit.core.persistance.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,8 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(user.getEmail(),

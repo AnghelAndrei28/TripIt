@@ -1,4 +1,4 @@
-package com.example.tripit.dtos;
+package com.example.tripit.auth.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
