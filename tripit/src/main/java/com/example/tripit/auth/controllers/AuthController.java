@@ -15,7 +15,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<Long> authenticateUser(@RequestBody LoginDto loginDto) {
         return authService.loginUser(loginDto);
     }
 

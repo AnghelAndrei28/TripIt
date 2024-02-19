@@ -1,5 +1,6 @@
 package com.example.tripit.core.services;
 
+import com.example.tripit.auth.dtos.LoginDto;
 import com.example.tripit.auth.dtos.RegisterDto;
 import com.example.tripit.core.mappers.factory.UserFactory;
 import com.example.tripit.core.persistance.UserRepository;
@@ -29,7 +30,12 @@ public class UserServiceImpl implements UserService{
         return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
     }
 
-    public User generateUser(RegisterDto registerDto) {
+    private User generateUser(RegisterDto registerDto) {
         return userFactory.generateUser(registerDto);
+    }
+
+    @Override
+    public Long getUserId(LoginDto loginDto) {
+        return userRepository.findByUsername(loginDto.getUsername()).getId();
     }
 }

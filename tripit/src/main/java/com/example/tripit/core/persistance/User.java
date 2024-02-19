@@ -34,10 +34,4 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
-
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
 }

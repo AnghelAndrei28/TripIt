@@ -24,10 +24,10 @@ public class AuthService {
         return userService.saveUser(registerDto);
     }
 
-    public ResponseEntity<String> loginUser(LoginDto loginDto) {
+    public ResponseEntity<Long> loginUser(LoginDto loginDto) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User login successfully!...", HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserId(loginDto), HttpStatus.OK);
     }
 }
