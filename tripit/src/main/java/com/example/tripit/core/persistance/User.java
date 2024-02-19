@@ -1,10 +1,12 @@
-package com.example.tripit.persistance;
+package com.example.tripit.core.persistance;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,9 +32,6 @@ public class User {
     @Column(nullable=false)
     private String password;
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles;
 }
