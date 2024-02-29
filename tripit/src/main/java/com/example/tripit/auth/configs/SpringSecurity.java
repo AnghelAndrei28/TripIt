@@ -34,7 +34,7 @@ public class SpringSecurity {
         http.csrf((csrf) -> {
             try {
                 csrf.disable()
-                        .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth/**").permitAll()
+                        .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth/**", "/places/**").permitAll()
                                 .anyRequest().authenticated());
             } catch (Exception e) {
                 throw new RuntimeException(e);
