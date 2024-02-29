@@ -1,5 +1,7 @@
 package com.example.tripit.places.controllers;
 
+import com.example.tripit.places.dtos.CategoryDTO;
+import com.example.tripit.places.dtos.entities.Category;
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.services.PlacesServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,11 @@ public class PlacesController {
     public ResponseEntity<Mono<PlacesDTO>> getAllNearbyPlacesByCategory(@PathVariable("category") String category) {
 
         return ResponseEntity.ok(webClientService.getAllByCategory(category));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Mono<CategoryDTO>> getAllCategories() {
+
+        return ResponseEntity.ok(webClientService.getAllCategories());
     }
 }
