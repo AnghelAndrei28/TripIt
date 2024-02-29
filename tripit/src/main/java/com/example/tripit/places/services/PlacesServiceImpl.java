@@ -17,8 +17,17 @@ public class PlacesServiceImpl implements PlacesService{
     @Value("${tomtom.key}")
     private String tomtomKey;
 
-    public Mono<PlacesDTO> get() {
+    public Mono<PlacesDTO> getAll() {
         String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=44.448099&lon=25.982895", tomtomKey);
+        return webClient.method(HttpMethod.GET)
+                .uri(url)
+                .retrieve()
+                .bodyToMono(PlacesDTO.class);
+    }
+
+    @Override
+    public Mono<PlacesDTO> getAllByCategory(String category) {
+        String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=44.448099&lon=25.982895&category=%s", tomtomKey, category);
         return webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()

@@ -5,6 +5,7 @@ import com.example.tripit.places.services.PlacesServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -17,8 +18,14 @@ public class PlacesController {
     private final PlacesServiceImpl webClientService;
 
     @GetMapping("/nearby")
-    public ResponseEntity<Mono<PlacesDTO>> getNearbyPlaces() {
+    public ResponseEntity<Mono<PlacesDTO>> getAllNearbyPlaces() {
 
-        return ResponseEntity.ok(webClientService.get());
+        return ResponseEntity.ok(webClientService.getAll());
+    }
+
+    @GetMapping("/nearby/{category}")
+    public ResponseEntity<Mono<PlacesDTO>> getAllNearbyPlacesByCategory(@PathVariable("category") String category) {
+
+        return ResponseEntity.ok(webClientService.getAllByCategory(category));
     }
 }

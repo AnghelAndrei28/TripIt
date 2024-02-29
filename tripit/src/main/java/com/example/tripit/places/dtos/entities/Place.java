@@ -3,6 +3,7 @@ package com.example.tripit.places.dtos.entities;
 import com.example.tripit.places.dtos.entities.utils.Address;
 import com.example.tripit.places.dtos.entities.utils.EntryPoint;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
+import com.example.tripit.places.dtos.entities.utils.POI;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -25,6 +26,9 @@ public class Place {
 
     @JsonProperty("dist")
     private double dist;
+
+    @JsonProperty("poi")
+    private POI poi;
 
     @JsonProperty("address")
     private Address address;

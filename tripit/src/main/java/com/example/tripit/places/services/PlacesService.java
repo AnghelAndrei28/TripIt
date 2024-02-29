@@ -5,5 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface PlacesService {
 
-    Mono<PlacesDTO> get();
+    Mono<PlacesDTO> getAll();
+
+    Mono<PlacesDTO> getAllByCategory(String category);
 }
