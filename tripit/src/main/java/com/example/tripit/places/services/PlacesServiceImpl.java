@@ -3,6 +3,7 @@ package com.example.tripit.places.services;
 import com.example.tripit.places.dtos.CategoryDTO;
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.dtos.entities.Category;
+import com.example.tripit.places.dtos.entities.utils.GeoBias;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -21,8 +22,8 @@ public class PlacesServiceImpl implements PlacesService{
     @Value("${tomtom.key}")
     private String tomtomKey;
 
-    public Mono<PlacesDTO> getAll() {
-        String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=44.448099&lon=25.982895", tomtomKey);
+    public Mono<PlacesDTO> getAll(GeoBias geoBias) {
+        String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=%s&lon=%s", tomtomKey, geoBias.getLat(), geoBias.getLon());
         return webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()
@@ -30,8 +31,8 @@ public class PlacesServiceImpl implements PlacesService{
     }
 
     @Override
-    public Mono<PlacesDTO> getAllByCategory(String category) {
-        String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=44.448099&lon=25.982895&category=%s", tomtomKey, category);
+    public Mono<PlacesDTO> getAllByCategory(String category, GeoBias geoBias) {
+        String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=%s&lon=%s&category=%s", tomtomKey, geoBias.getLat(), geoBias.getLon(), category);
         return webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()

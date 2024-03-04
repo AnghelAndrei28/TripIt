@@ -21,7 +21,7 @@ public class POI {
     private String url;
 
     @JsonProperty("categorySet")
-    List<Long> categorySet;
+    List<CategoryId> categorySet;
 
     @JsonProperty("categories")
     List<String> categories;

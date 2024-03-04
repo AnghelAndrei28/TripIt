@@ -7,11 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeoBias {
+public class CategoryId {
 
-    @JsonProperty("lat")
-    private double lat;
-
-    @JsonProperty("lon")
-    private double lon;
+    @JsonProperty("id")
+    private Integer id;
 }
