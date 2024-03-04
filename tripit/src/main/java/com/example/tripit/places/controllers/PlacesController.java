@@ -1,37 +1,43 @@
 package com.example.tripit.places.controllers;
 
-import com.example.tripit.places.dtos.CategoryDTO;
-import com.example.tripit.places.dtos.entities.Category;
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
-import com.example.tripit.places.services.PlacesServiceImpl;
+import com.example.tripit.places.persistance.Category;
+import com.example.tripit.places.services.WebServiceFacadeImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/places")
 public class PlacesController {
 
-    private final PlacesServiceImpl webClientService;
+    private final WebServiceFacadeImpl webClientService;
 
     @GetMapping("/nearby")
     public ResponseEntity<Mono<PlacesDTO>> getAllNearbyPlaces(@RequestParam("lat") double lat, @RequestParam("lon") double lon) {
 
-        return ResponseEntity.ok(webClientService.getAll(new GeoBias(lat, lon)));
+        return ResponseEntity.ok(webClientService.getAllPlaces(new GeoBias(lat, lon)));
     }
 
     @GetMapping("/nearby/{category}")
     public ResponseEntity<Mono<PlacesDTO>> getAllNearbyPlacesByCategory(@PathVariable("category") String category, @RequestParam("lat") double lat, @RequestParam("lon") double lon) {
 
-        return ResponseEntity.ok(webClientService.getAllByCategory(category, new GeoBias(lat, lon)));
+        return ResponseEntity.ok(webClientService.getAllPlacesByCategory(category, new GeoBias(lat, lon)));
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<Mono<CategoryDTO>> getAllCategories() {
+    public ResponseEntity<List<Category>> getAllCategories() {
 
         return ResponseEntity.ok(webClientService.getAllCategories());
+    }
+
+    @PostMapping("/categories")
+    public void updateCategories() {
+        webClientService.updateCategories();
     }
 }

@@ -2,7 +2,7 @@ package com.example.tripit.places.services;
 
 import com.example.tripit.places.dtos.CategoryDTO;
 import com.example.tripit.places.dtos.PlacesDTO;
-import com.example.tripit.places.dtos.entities.Category;
+import com.example.tripit.places.persistance.Category;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class PlacesServiceImpl implements PlacesService{
     @Value("${tomtom.key}")
     private String tomtomKey;
 
-    public Mono<PlacesDTO> getAll(GeoBias geoBias) {
+    public Mono<PlacesDTO> getAllPlaces(GeoBias geoBias) {
         String url = String.format("https://api.tomtom.com/search/2/nearbySearch/.json?key=%s&lat=%s&lon=%s", tomtomKey, geoBias.getLat(), geoBias.getLon());
         return webClient.method(HttpMethod.GET)
                 .uri(url)
@@ -39,16 +39,15 @@ public class PlacesServiceImpl implements PlacesService{
                 .bodyToMono(PlacesDTO.class);
     }
 
-    @Override
-    public Mono<CategoryDTO> getAllCategories() {
+    public void updateCategories() {
         String url = String.format("https://api.tomtom.com/search/2/poiCategories.json?key=%s", tomtomKey);
-        return webClient.method(HttpMethod.GET)
+        webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()
                 .bodyToMono(CategoryDTO.class).map(categoryDTO -> {
-                    List<Category> newList = categoryDTO.getCategories().stream().filter(category -> category.getId().toString().length() == 4).toList();
-                    categoryDTO.setCategories(newList);
-                    return categoryDTO;
-                });
+            List<Category> newList = categoryDTO.getCategories().stream().filter(category -> category.getId().toString().length() == 4).toList();
+
+            return categoryDTO;
+        });
     }
 }
