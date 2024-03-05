@@ -1,8 +1,8 @@
-package com.example.tripit.places.services;
+package com.example.tripit.core.services;
 
 import com.example.tripit.places.dtos.CategoryDTO;
-import com.example.tripit.places.persistance.Category;
-import com.example.tripit.places.persistance.CategoryRepository;
+import com.example.tripit.core.persistance.Category;
+import com.example.tripit.core.persistance.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

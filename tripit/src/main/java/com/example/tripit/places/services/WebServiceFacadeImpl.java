@@ -1,8 +1,10 @@
 package com.example.tripit.places.services;
 
+import com.example.tripit.core.services.CategoryService;
+import com.example.tripit.core.services.CoreServiceFacade;
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
-import com.example.tripit.places.persistance.Category;
+import com.example.tripit.core.persistance.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -14,7 +16,10 @@ import java.util.List;
 public class WebServiceFacadeImpl implements WebServiceFacade{
 
     private final PlacesService placesService;
+
     private final CategoryService categoryService;
+
+    private final CoreServiceFacade coreServiceFacade;
 
     @Override
     public void updateCategories() {
@@ -36,5 +41,8 @@ public class WebServiceFacadeImpl implements WebServiceFacade{
         return categoryService.getAllCategories();
     }
 
-
+    @Override
+    public Mono<PlacesDTO> getRecommendations(Long id, GeoBias geoBias) {
+        return placesService.getRecommendations(coreServiceFacade.getPreferencesById(id), geoBias);
+    }
 }

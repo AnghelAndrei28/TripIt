@@ -1,6 +1,6 @@
-package com.example.tripit.places.services;
+package com.example.tripit.core.services;
 
-import com.example.tripit.places.persistance.Category;
+import com.example.tripit.core.persistance.Category;
 
 import java.util.List;
 

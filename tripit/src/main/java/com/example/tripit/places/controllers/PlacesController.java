@@ -2,7 +2,7 @@ package com.example.tripit.places.controllers;
 
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
-import com.example.tripit.places.persistance.Category;
+import com.example.tripit.core.persistance.Category;
 import com.example.tripit.places.services.WebServiceFacadeImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +39,10 @@ public class PlacesController {
     @PostMapping("/categories")
     public void updateCategories() {
         webClientService.updateCategories();
+    }
+
+    @GetMapping("/{id}/nearby")
+    public ResponseEntity<Mono<PlacesDTO>> getRecommendations(@PathVariable("id") Long id, @RequestParam("lat") double lat, @RequestParam("lon") double lon) {
+        return ResponseEntity.ok(webClientService.getRecommendations(id, new GeoBias(lat, lon)));
     }
 }
