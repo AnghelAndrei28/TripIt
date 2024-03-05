@@ -1,4 +1,4 @@
-package com.example.tripit.core.persistance;
+package com.example.tripit.core.persistance.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

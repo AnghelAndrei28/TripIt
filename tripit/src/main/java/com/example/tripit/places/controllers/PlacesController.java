@@ -2,7 +2,7 @@ package com.example.tripit.places.controllers;
 
 import com.example.tripit.places.dtos.PlacesDTO;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
-import com.example.tripit.core.persistance.Category;
+import com.example.tripit.core.persistance.models.Category;
 import com.example.tripit.places.services.WebServiceFacadeImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

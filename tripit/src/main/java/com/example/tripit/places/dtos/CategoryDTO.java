@@ -1,6 +1,6 @@
 package com.example.tripit.places.dtos;
 
-import com.example.tripit.core.persistance.Category;
+import com.example.tripit.core.persistance.models.Category;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 

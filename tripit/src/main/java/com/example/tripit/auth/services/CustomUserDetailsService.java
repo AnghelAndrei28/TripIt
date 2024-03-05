@@ -1,8 +1,8 @@
 package com.example.tripit.auth.services;
 
-import com.example.tripit.core.persistance.Role;
-import com.example.tripit.core.persistance.User;
-import com.example.tripit.core.persistance.UserRepository;
+import com.example.tripit.core.persistance.models.Role;
+import com.example.tripit.core.persistance.models.User;
+import com.example.tripit.core.persistance.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,21 +22,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
-        }else{
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
+        return userRepository.findByUsername(username)
+                .map(user -> new org.springframework.security.core.userdetails.User(user.getEmail(),
+                        user.getPassword(),
+                        mapRolesToAuthorities(user.getRoles())))
+                .orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
     }
 
     private Collection < ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
-        Collection< ? extends GrantedAuthority> mapRoles = roles.stream()
+        return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-        return mapRoles;
     }
 }

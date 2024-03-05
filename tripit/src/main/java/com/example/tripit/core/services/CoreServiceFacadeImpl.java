@@ -1,11 +1,8 @@
 package com.example.tripit.core.services;
 
-import com.example.tripit.core.persistance.Category;
-import com.example.tripit.places.dtos.PlacesDTO;
-import com.example.tripit.places.dtos.entities.utils.GeoBias;
+import com.example.tripit.core.persistance.models.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -30,5 +27,10 @@ public class CoreServiceFacadeImpl implements CoreServiceFacade{
     @Override
     public List<Category> getPreferencesById(Long id) {
         return userService.getPreferencesById(id);
+    }
+
+    @Override
+    public void checkIfCategoryExists(String category) {
+        categoryService.checkIfCategoryExists(category);
     }
 }

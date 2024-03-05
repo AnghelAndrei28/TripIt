@@ -1,5 +1,6 @@
-package com.example.tripit.core.persistance;
+package com.example.tripit.core.persistance.repositories;
 
+import com.example.tripit.core.persistance.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
