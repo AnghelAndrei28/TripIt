@@ -2,7 +2,7 @@ package com.example.tripit.core.mappers.factory;
 
 import com.example.tripit.auth.dtos.LoginDto;
 import com.example.tripit.auth.dtos.RegisterDto;
-import com.example.tripit.core.persistance.User;
+import com.example.tripit.core.persistance.models.User;
 
 public interface UserFactory {
 

@@ -25,6 +25,7 @@ dependencies {
 	implementation 'com.azure.spring:spring-cloud-azure-starter'
 	implementation 'com.azure.spring:spring-cloud-azure-starter-jdbc-postgresql'
 	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 

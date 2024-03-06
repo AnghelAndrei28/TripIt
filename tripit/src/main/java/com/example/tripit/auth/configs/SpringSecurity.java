@@ -1,5 +1,6 @@
 package com.example.tripit.auth.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SpringSecurity {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -34,7 +35,7 @@ public class SpringSecurity {
         http.csrf((csrf) -> {
             try {
                 csrf.disable()
-                        .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth/**").permitAll()
+                        .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth/**", "/places/**").permitAll()
                                 .anyRequest().authenticated());
             } catch (Exception e) {
                 throw new RuntimeException(e);
