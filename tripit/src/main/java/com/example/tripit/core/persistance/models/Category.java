@@ -1,4 +1,4 @@
-package com.example.tripit.core.persistance;
+package com.example.tripit.core.persistance.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;

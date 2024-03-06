@@ -2,7 +2,11 @@ package com.example.tripit.core.mappers.factory;
 
 import com.example.tripit.auth.dtos.LoginDto;
 import com.example.tripit.auth.dtos.RegisterDto;
-import com.example.tripit.core.persistance.*;
+import com.example.tripit.core.persistance.models.Category;
+import com.example.tripit.core.persistance.models.Role;
+import com.example.tripit.core.persistance.models.User;
+import com.example.tripit.core.persistance.repositories.CategoryRepository;
+import com.example.tripit.core.persistance.repositories.RoleRepository;
 import com.example.tripit.places.dtos.entities.utils.CategoryId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,8 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
 package com.example.tripit.places.services;
 
-import com.example.tripit.places.dtos.CategoryDTO;
+import com.example.tripit.exceptions.NearbyTomTomException;
 import com.example.tripit.places.dtos.PlacesDTO;
-import com.example.tripit.core.persistance.Category;
+import com.example.tripit.core.persistance.models.Category;
 import com.example.tripit.places.dtos.entities.utils.GeoBias;
 import com.example.tripit.places.mappers.factory.PreferenceFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,9 @@ public class PlacesServiceImpl implements PlacesService{
         return webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()
+                .onStatus(httpStatus -> httpStatus.is4xxClientError() || httpStatus.is5xxServerError(), clientResponse -> clientResponse.bodyToMono(String.class).flatMap(error ->
+                        Mono.error(new NearbyTomTomException("Error with TomTom Nearby API: " + error))
+                ))
                 .bodyToMono(PlacesDTO.class);
     }
 
@@ -39,6 +42,9 @@ public class PlacesServiceImpl implements PlacesService{
         return webClient.method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()
+                .onStatus(httpStatus -> httpStatus.is4xxClientError() || httpStatus.is5xxServerError(), clientResponse -> clientResponse.bodyToMono(String.class).flatMap(error ->
+                        Mono.error(new NearbyTomTomException("Error with TomTom Nearby API: " + error))
+                ))
                 .bodyToMono(PlacesDTO.class);
     }
 
@@ -48,15 +54,8 @@ public class PlacesServiceImpl implements PlacesService{
         return getAllByCategory(categories, geoBias);
     }
 
-    public void updateCategories() {
-        String url = String.format("https://api.tomtom.com/search/2/poiCategories.json?key=%s", tomtomKey);
-        webClient.method(HttpMethod.GET)
-                .uri(url)
-                .retrieve()
-                .bodyToMono(CategoryDTO.class).map(categoryDTO -> {
-            List<Category> newList = categoryDTO.getCategories().stream().filter(category -> category.getId().toString().length() == 4).toList();
+    @Override
+    public void checkIfCategoryExists(String category) {
 
-            return categoryDTO;
-        });
     }
 }
