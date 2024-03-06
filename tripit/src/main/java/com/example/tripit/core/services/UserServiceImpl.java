@@ -25,12 +25,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResponseEntity<?> saveUser(RegisterDto registerDto) {
+        checkRegisterDetails(registerDto);
+
         if(userRepository.existsByUsername(registerDto.getUsername())){
             throw new CredentialsAlreadyExistException("Username is already exist!");
         }
+
         if(userRepository.existsByEmail(registerDto.getEmail())){
             throw new CredentialsAlreadyExistException("Email is already exist!");
         }
+
         userRepository.save(generateUser(registerDto));
         return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
     }
@@ -51,5 +55,15 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id)
                 .map(User::getPreferences)
                 .orElseThrow(() -> new UserNotFoundException("User not found!"));
+    }
+
+    void checkRegisterDetails(RegisterDto registerDto) {
+        if(registerDto.getEmail() == null) {
+            throw new IllegalArgumentException("Email is empty!");
+        } else if(registerDto.getUsername() == null) {
+            throw new IllegalArgumentException("Username is empty!");
+        } else if(registerDto.getPassword() == null) {
+            throw new IllegalArgumentException("Password is empty!");
+        }
     }
 }

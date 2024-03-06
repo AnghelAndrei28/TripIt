@@ -1,9 +1,9 @@
 package com.example.tripit.auth.services;
 
 import com.example.tripit.core.persistance.models.Role;
-import com.example.tripit.core.persistance.models.User;
 import com.example.tripit.core.persistance.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(user -> new org.springframework.security.core.userdetails.User(user.getEmail(),
                         user.getPassword(),
                         mapRolesToAuthorities(user.getRoles())))
-                .orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
+                .orElseThrow(() -> new AuthenticationException("Invalid username or password.") {
+                });
     }
 
     private Collection < ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {

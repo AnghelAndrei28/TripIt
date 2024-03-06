@@ -1,6 +1,6 @@
 package com.example.tripit.core.services;
 
-import com.example.tripit.exceptions.NearbyTomTomException;
+import com.example.tripit.exceptions.CategoryTomTomException;
 import com.example.tripit.places.dtos.CategoryDTO;
 import com.example.tripit.core.persistance.models.Category;
 import com.example.tripit.core.persistance.repositories.CategoryRepository;
@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .uri(url)
                 .retrieve()
                 .onStatus(httpStatus -> httpStatus.is4xxClientError() || httpStatus.is5xxServerError(), clientResponse -> clientResponse.bodyToMono(String.class).flatMap(error ->
-                        Mono.error(new NearbyTomTomException("Error with TomTom Categories API: " + error))
+                        Mono.error(new CategoryTomTomException("Error with TomTom Categories API: " + error))
                 ))
                 .bodyToMono(CategoryDTO.class).subscribe(categoryDTO -> {
                     List<Category> newList = categoryDTO.getCategories().stream().filter(category -> category.getId().toString().length() == 4).toList();
@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void checkIfCategoryExists(String category) {
         if(!categoryRepository.existsById(Integer.valueOf(category))){
-            throw new NearbyTomTomException("Category does not exist!");
+            throw new CategoryTomTomException("Category does not exist!");
         }
     }
 }
