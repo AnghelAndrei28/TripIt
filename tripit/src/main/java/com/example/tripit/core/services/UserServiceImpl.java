@@ -8,12 +8,14 @@ import com.example.tripit.core.persistance.repositories.UserRepository;
 import com.example.tripit.core.persistance.models.User;
 import com.example.tripit.exceptions.CredentialsAlreadyExistException;
 import com.example.tripit.exceptions.UserNotFoundException;
+import com.example.tripit.places.dtos.entities.utils.CategoryId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -55,6 +57,14 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id)
                 .map(User::getPreferences)
                 .orElseThrow(() -> new UserNotFoundException("User not found!"));
+    }
+
+    @Override
+    public void updatePreferences(Long id, Set<CategoryId> categories) {
+        userRepository.findById(id).map(user -> {
+            user.setPreferences(userFactory.getCategoriesFromPreferences(categories));
+            return userRepository.save(user);
+        }).orElseThrow(() -> new UserNotFoundException("User not found!"));
     }
 
     void checkRegisterDetails(RegisterDto registerDto) {

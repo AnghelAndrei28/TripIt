@@ -1,6 +1,5 @@
 package com.example.tripit.core.mappers.factory;
 
-import com.example.tripit.auth.dtos.LoginDto;
 import com.example.tripit.auth.dtos.RegisterDto;
 import com.example.tripit.core.persistance.models.Category;
 import com.example.tripit.core.persistance.models.Role;
@@ -13,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.Set;
 import java.util.List;
 
 @Component
@@ -33,13 +33,13 @@ public class UserFactoryImpl implements UserFactory{
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         Role roles = roleRepository.findByName("User").get();
         user.setRoles(Collections.singleton(roles));
-        List<Category> preferences = categoryRepository.findAllCategoriesById(registerDto.getPreferences().stream().map(CategoryId::getId).toList());
+        List<Category> preferences = getCategoriesFromPreferences(registerDto.getPreferences());
         user.setPreferences(preferences);
         return user;
     }
 
     @Override
-    public Long generateId(LoginDto loginDto) {
-        return null;
+    public List<Category> getCategoriesFromPreferences(Set<CategoryId> preferences) {
+        return categoryRepository.findAllCategoriesById(preferences.stream().map(CategoryId::getId).toList());
     }
 }
